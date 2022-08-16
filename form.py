@@ -16,7 +16,7 @@ class SintekMSGGenerate(FlaskForm):
     alphaconfig = FileField("alphaconfig: ", validators=[DataRequired()])
     externalobjects = FileField("externalobjects: ", validators=[DataRequired()])
     dp_in_prg = FileField("dp_in_prg: ", validators=[DataRequired()])
-    submit = SubmitField("Submit")
+    submit = SubmitField("Генерировать сообщения")
 
 
 class HEX2DEC(FlaskForm):

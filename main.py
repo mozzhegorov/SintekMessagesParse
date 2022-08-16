@@ -155,6 +155,7 @@ def newcsv(data, fieldnames=""):
         quotechar=";",
     )
 
+    wr.writerow(("Сообщение", "Цвет", "Звук", "Severity", ))
     for item in data:
         wr.writerow(item)
 
