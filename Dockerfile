@@ -7,8 +7,9 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 RUN apt-get update
 RUN pip install --upgrade pip
-COPY . .
+COPY requirements.txt .
 RUN pip install -r requirements.txt
+COPY . .
 
 ENTRYPOINT ["python"]
 CMD ["server.py"]
