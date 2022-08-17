@@ -16,6 +16,7 @@ class SintekMSGGenerate(FlaskForm):
     alphaconfig = FileField("alphaconfig: ", validators=[DataRequired()])
     externalobjects = FileField("externalobjects: ", validators=[DataRequired()])
     dp_in_prg = FileField("dp_in_prg: ", validators=[DataRequired()])
+    dpa_in_prg = FileField("dpa_in_prg: ", validators=[])
     submit = SubmitField("Генерировать сообщения")
 
 

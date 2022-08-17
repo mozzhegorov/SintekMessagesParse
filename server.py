@@ -20,7 +20,9 @@ def sintekmsg():
         alphaconfig = form.alphaconfig.data.read().decode('utf-8')
         externalobjects = form.externalobjects.data.read()
         dp_in_prg = form.dp_in_prg.data.read().decode('utf-8')
-        messages = generate_messages_file(alphaconfig, externalobjects, dp_in_prg)
+
+        dpa_in_prg = form.dpa_in_prg.data.read().decode('utf-8') if form.dpa_in_prg else []
+        messages = generate_messages_file(alphaconfig, externalobjects, dp_in_prg, dpa_in_prg)
         mem = io.BytesIO()
         StreamWriter = codecs.getwriter('utf-8')
         wrapper_file = StreamWriter(mem)
