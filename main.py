@@ -33,6 +33,7 @@ COLORS = {
     3: "Цвет3",
     9: "Зеленый",
     4: "цвет4",
+    5: "цвет5",
     700: "Красный",
     701: "Желтый",
 }
@@ -88,7 +89,7 @@ def oip_generate(signals, external, *args):
     result = []
     for signal in signals:
         for addition in external:
-            if (int(addition.attrib['Value']) in OIP_FILTER or len(external) > 40) \
+            if (int(addition.attrib['Value']) in OIP_FILTER or len(external) < 40) \
                     and int(addition.attrib['Enabled']):
                 result.append(get_table_string(signal, addition))
     return result
@@ -128,6 +129,7 @@ def dp_generate(signals, external, *args):
 types_methods = {
     "Измеряемый параметр (6 уставок)": oip_generate,
     "Дискретный параметр": dp_generate,
+    "Аналоговый дискретный параметр": dp_generate,
 }
 
 
@@ -162,25 +164,34 @@ def newcsv(data, fieldnames=""):
     return new_csvfile
 
 
-def generate_messages_file(alpha_config_raw, external_objects_raw, dp_in_prg_raw):
+def generate_messages_file(alpha_config_raw, external_objects_raw, dp_in_prg_raw, dpa_in_prg_raw):
     alpha_config = tree.fromstring(alpha_config_raw) \
         .find("Signals") \
         .find("Items")
     external_objects = tree.fromstring(external_objects_raw) \
         .find("Types")
+    in_prg_list = []
     dp_in_prg = tree.fromstring(dp_in_prg_raw) \
         .find("dataBlock") \
         .find("variables") \
         .findall("instanceElementDesc")
+    in_prg_list.extend(dp_in_prg)
+    dpa_in_prg = tree.fromstring(dpa_in_prg_raw) \
+        .find("dataBlock") \
+        .find("variables") \
+        .findall("instanceElementDesc") if dpa_in_prg_raw else dpa_in_prg_raw
+    in_prg_list.extend(dpa_in_prg)
 
     all_messages = []
     for signal_type in external_objects:
         type_name = signal_type.attrib["Name"]
         conditions = signal_type.find("EventConditions").find("EventCondition")
         signals_of_type = xpath_find(alpha_config, type_name)
+        print(type_name)
+        print(signals_of_type)
         messages = None
         if conditions and type_name in types_methods:
-            messages = types_methods[type_name](signals_of_type, conditions, dp_in_prg)
+            messages = types_methods[type_name](signals_of_type, conditions, in_prg_list)
         elif conditions:
             messages = universal_generate(signals_of_type, conditions)
         if messages:
