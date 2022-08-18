@@ -13,10 +13,10 @@ HEX_STYLE = {'style': 'width: 4ch; text-align: center'}
 
 
 class SintekMSGGenerate(FlaskForm):
-    alphaconfig = FileField("alphaconfig: ", validators=[DataRequired()])
-    externalobjects = FileField("externalobjects: ", validators=[DataRequired()])
-    dp_in_prg = FileField("dp_in_prg: ", validators=[DataRequired()])
-    dpa_in_prg = FileField("dpa_in_prg: ", validators=[])
+    alphaconfig = FileField("alphaconfig.xmlcfg: ", validators=[DataRequired()])
+    externalobjects = FileField("externalobjects.xml: ", validators=[DataRequired()])
+    dp_in_prg = FileField("dp_in_prg.xsy: ", validators=[DataRequired()])
+    dpa_in_prg = FileField("dpa_in_prg.xsy: ", validators=[])
     submit = SubmitField("Генерировать сообщения")
 
 
