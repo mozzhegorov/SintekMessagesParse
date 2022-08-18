@@ -42,7 +42,7 @@ STATION = "tyumen"
 
 def get_table_string(signal, external):
     severity = int(external.attrib["Severity"])
-    color = COLORS[severity]
+    color = COLORS[severity] if severity in COLORS else severity
     sound = external.attrib['Sound'] if external.attrib['Sound'] else ''
     return [
         f"{signal}{external.attrib['Message']}",
