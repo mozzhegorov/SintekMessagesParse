@@ -187,8 +187,6 @@ def generate_messages_file(alpha_config_raw, external_objects_raw, dp_in_prg_raw
         type_name = signal_type.attrib["Name"]
         conditions = signal_type.find("EventConditions").find("EventCondition")
         signals_of_type = xpath_find(alpha_config, type_name)
-        print(type_name)
-        print(signals_of_type)
         messages = None
         if conditions and type_name in types_methods:
             messages = types_methods[type_name](signals_of_type, conditions, in_prg_list)
